@@ -9,7 +9,7 @@ Pod::Spec.new do |s|
   s.homepage         = "https://github.com/antons81/BSImagePicker"
   s.license          = 'MIT'
   s.author           = { "Joakim Gyllström" => "joakim@backslashed.se" }
-  s.source           = { :git => "https://github.com/antons81/BSImagePicker.git", :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/antons81/BSImagePicker.git', :tag => s.version.to_s }
 
   s.platform     = :ios, '8.0'
   s.requires_arc = true
