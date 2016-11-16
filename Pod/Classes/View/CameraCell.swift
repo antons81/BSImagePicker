@@ -19,19 +19,19 @@ final class CameraCell: UICollectionViewCell {
             imageView.image = takePhotoIcon
             
             // Apply tint to image
-            imageView.image = imageView.image?.withRenderingMode(.alwaysTemplate)
+            imageView.image = imageView.image?.imageWithRenderingMode(.AlwaysTemplate)
         }
     }
     
     var session: AVCaptureSession?
     var captureLayer: AVCaptureVideoPreviewLayer?
-    let sessionQueue = DispatchQueue(label: "AVCaptureVideoPreviewLayer", attributes: [])
+    let sessionQueue = dispatch_queue_create("AVCaptureVideoPreviewLayer", nil)
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         // Don't trigger camera access for the background
-        guard AVCaptureDevice.authorizationStatus(forMediaType: AVMediaTypeVideo) == .authorized else {
+        guard AVCaptureDevice.authorizationStatusForMediaType(AVMediaTypeVideo) == .Authorized else {
             return
         }
         
@@ -41,7 +41,7 @@ final class CameraCell: UICollectionViewCell {
             session?.sessionPreset = AVCaptureSessionPresetMedium
             
             // Hook upp device
-            let device = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+            let device = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
             let input = try AVCaptureDeviceInput(device: device)
             session?.addInput(input)
             
@@ -65,13 +65,13 @@ final class CameraCell: UICollectionViewCell {
     }
     
     func startLiveBackground() {
-        sessionQueue.async { () -> Void in
+        dispatch_async(sessionQueue) { () -> Void in
             self.session?.startRunning()
         }
     }
     
     func stopLiveBackground() {
-        sessionQueue.async { () -> Void in
+        dispatch_async(sessionQueue) { () -> Void in
             self.session?.stopRunning()
         }
     }

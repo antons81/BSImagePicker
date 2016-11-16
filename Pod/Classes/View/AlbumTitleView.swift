@@ -28,13 +28,13 @@ The navigation title view with album name and a button for activating the drop d
 final class AlbumTitleView: UIView {
     @IBOutlet weak var albumButton: UIButton!
     
-    fileprivate var context = 0
+    private var context = 0
     
     var albumTitle = "" {
         didSet {
             if let imageView = self.albumButton?.imageView, let titleLabel = self.albumButton?.titleLabel {
                 // Set title on button
-                albumButton?.setTitle(self.albumTitle, for: UIControlState())
+                albumButton?.setTitle(self.albumTitle, forState: .Normal)
                 
                 // Also set title directly to label, since it isn't done right away when setting button title
                 // And we need to know its width to calculate insets
@@ -52,21 +52,21 @@ final class AlbumTitleView: UIView {
         super.awakeFromNib()
         
         // Set image
-        albumButton?.setImage(arrowDownImage, for: UIControlState())
+        albumButton?.setImage(arrowDownImage, forState: .Normal)
     }
     
     lazy var arrowDownImage: UIImage? = {
         // Get path for BSImagePicker bundle
-        let bundlePath = Bundle(for: PhotosViewController.self).path(forResource: "BSImagePicker", ofType: "bundle")
-        let bundle: Bundle?
+        let bundlePath = NSBundle(forClass: PhotosViewController.self).pathForResource("BSImagePicker", ofType: "bundle")
+        let bundle: NSBundle?
         
         // Load bundle
         if let bundlePath = bundlePath {
-            bundle = Bundle(path: bundlePath)
+            bundle = NSBundle(path: bundlePath)
         } else {
             bundle = nil
         }
         
-        return UIImage(named: "arrow_down", in: bundle, compatibleWith: nil)
+        return UIImage(named: "arrow_down", inBundle: bundle, compatibleWithTraitCollection: nil)
     }()
 }
